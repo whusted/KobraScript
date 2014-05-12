@@ -6,8 +6,9 @@
  *   var program = parse(tokens)
  */
 
-var scanner = require('./scanner')
+var scan = require('./scanner')
 var error = require('./error')
+var parse = require('./parser')
 
 var Program = require('./entities/program')
 var Blueprint = require('./entities/blueprint')
@@ -48,6 +49,7 @@ var dirname
    variable declaration */
 var continuing = false
 
+
 module.exports = function (scanner_output, filename, dir) {
   dirname = dir
   tokens = scanner_output
@@ -59,6 +61,14 @@ module.exports = function (scanner_output, filename, dir) {
 function parseProgram() {
   var initialBlock = new Block(parseStatements())
   if (initialBlock.statements[0] !== undefined) {
+    initialBlock.statements.forEach(function (statement) {
+      if (statement.constructor.name === 'Construction') {
+        scan(dirname + statement.targetBlueprint, function (tokens) {
+          if (error.count > 0) return;
+          var blueprint = parse(tokens, statement.targetBlueprint, dirname)
+        })
+      }
+    })
     return new Program(initialBlock)
   } else {
     error('expected statement but found EOF')

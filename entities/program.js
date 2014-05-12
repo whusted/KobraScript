@@ -1,15 +1,20 @@
 var initialContext = require('../analyzer').initialContext()
 var HashMap = require('hashmap').HashMap
 
-function Program(block) {
+function Program(block, blueprints) {
   this.block = block
+  this.blueprints = blueprints
 }
 
 Program.prototype.toString = function () {
+  //no printout for imported blueprints yet
   return '(Program ' + this.block + ')' 
 }
 
 Program.prototype.analyze = function () {
+  this.blueprints.forEach(function (blueprint) {
+    blueprint.analyze(initialContext)
+  })
   this.block.analyze(initialContext)
 }
 
