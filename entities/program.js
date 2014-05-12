@@ -12,9 +12,11 @@ Program.prototype.toString = function () {
 }
 
 Program.prototype.analyze = function () {
-  this.blueprints.forEach(function (blueprint) {
-    blueprint.analyze(initialContext)
-  })
+  if (this.blueprints) {
+    this.blueprints.forEach(function (blueprint) {
+      blueprint.analyze(initialContext)
+    })
+  }
   this.block.analyze(initialContext)
 }
 
