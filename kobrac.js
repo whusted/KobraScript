@@ -22,7 +22,7 @@ if (argv._.length === 0) {
 } else {
   if (validExtension) {
     scan(argv._[0], function (tokens) {
-      if (error.count > 0) return
+      if (error.count > 0) return;
       if (argv.t) {
         tokenIndex = 1
         tokens.forEach(function (t) {

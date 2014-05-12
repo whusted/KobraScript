@@ -51,6 +51,7 @@ var continuing = false
 
 
 module.exports = function (scanner_output, filename, dir) {
+  console.log("Yo")
   dirname = dir
   tokens = scanner_output
   var program = at('blueprint') ? parseBlueprint(filename) : parseProgram()
@@ -60,16 +61,23 @@ module.exports = function (scanner_output, filename, dir) {
 
 function parseProgram() {
   var initialBlock = new Block(parseStatements())
+  var blueprints = []
   if (initialBlock.statements[0] !== undefined) {
     initialBlock.statements.forEach(function (statement) {
+      //console.log(statement.constructor.name)
       if (statement.constructor.name === 'Construction') {
-        scan(dirname + statement.targetBlueprint, function (tokens) {
+        scan(dirname + '/' + statement.targetBlueprint, function (tokens) {
           if (error.count > 0) return
-          var blueprint = parse(tokens, statement.targetBlueprint, dirname)
+          tokens = tokens
+          console.log(tokens)
+          console.log(statement.targetBlueprint)
+          var blueprint = parseBlueprint(statement.targetBlueprint)
+          match('EOF')
+          blueprints.push(blueprint)
         })
       }
     })
-    return new Program(initialBlock)
+    return new Program(initialBlock, blueprints)
   } else {
     error('expected statement but found EOF')
   }

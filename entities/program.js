@@ -8,7 +8,7 @@ function Program(block, blueprints) {
 
 Program.prototype.toString = function () {
   //no printout for imported blueprints yet
-  return '(Program ' + this.block + ')' 
+  return '(Blueprints ' + this.blueprints.length + ')(Program ' + this.block + ')' 
 }
 
 Program.prototype.analyze = function () {

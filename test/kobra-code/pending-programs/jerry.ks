@@ -1,1 +1,1 @@
-$ a = construct Robot(name = "Jerry")
+construct Robot(name = "Jerry")
