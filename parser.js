@@ -312,18 +312,10 @@ function parseConstruct() {
   var args = (function () {
       match('(')
       var args = [] //of values and assignment instructions
-      if (at('ID') && next('=') || at(['fn','proc'])) {
-        args.push(parseAssignmentStatement('='))
-      } else if (!at(')')) {
-        args.push(parseExpression())
-      }
+      args.push(parseExpression())
       while (at(',')) {
         match()
-        if (at('ID') && next('=') || at(['fn','proc'])) {
-          args.push(parseAssignmentStatement('='))
-        } else if (!at(')')) {
-          args.push(parseExpression())
-        }
+        args.push(parseExpression())
       }
       match(')')
       return args

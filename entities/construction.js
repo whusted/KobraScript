@@ -13,7 +13,7 @@ function Construction(blueid, args, dir) {
 }
 
 Construction.prototype.toString = function () {
-  return '(Construct ' + this.blueid + '~(' + this.args.toString() + '))'
+  return '(Construct ' + this.blueid + ' (' + this.args.toString() + '))'
 }
 
 Construction.prototype.analyze = function (context) {
