@@ -64,7 +64,7 @@ function parseProgram() {
     initialBlock.statements.forEach(function (statement) {
       if (statement.constructor.name === 'Construction') {
         scan(dirname + statement.targetBlueprint, function (tokens) {
-          if (error.count > 0) return;
+          if (error.count > 0) return
           var blueprint = parse(tokens, statement.targetBlueprint, dirname)
         })
       }
